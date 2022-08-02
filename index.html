@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-trans="title">My Book Shop</title>
+    <!-- <link rel="stylesheet" href="lib/bootstrap/bootstrap.css"> -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body onload="onInit()">
+    <h1 data-trans="heading">Welcome to my bookshop</h1>
+    <img class="head-img" src="img/book-shop.png" alt="">
+    <hr />
+
+    <!-- main table -->
+    <section class="books-container">
+        <div class="filter-container">
+            <form onsubmit="onRegexSearch(event)">
+                <input data-trans="search-placeholder" placeholder="Search for a book" type="text" id="" min="3"
+                    max="15" value="" size="" class="search-bar">
+                <button data-trans="search">Search</button>
+            </form>
+            <select class="sort-by" onchange="onSetSortBy()">
+                <option data-trans="sort-by" value="">Sort by</option>
+                <option data-trans="sort-by-highest-price" value="maxPrice">Highest Price</option>
+                <option data-trans="sort-by-lowest-rate" value="minRate">Lowest Rate</option>
+            </select>
+            <select class="lang-selecet" onchange="onSetLang(this.value)">
+                <option value="en">English</option>
+                <option value="he">עברית</option>
+            </select>
+        </div>
+        <div class="table-container">
+            <table class="book-table">
+                <thead>
+                    <th data-trans="th-id">Id</th>
+                    <th data-trans="th-title">Title</th>
+                    <th data-trans="th-price" onclick="onTHClick(this)" class="th-price">Price</th>
+                    <th data-trans="th-actions" colspan="3">Actions</th>
+                    <th data-trans="th-rate" onclick="onTHClick(this)" class="th-rate">Rate</th>
+                </thead>
+                <tbody class="book-tbody">
+
+                </tbody>
+            </table>
+        </div>
+        <span data-trans="new-book" onclick="onOpenNewBookModal()" class="new-book">Create new book +</span>
+        <div class="pagination">
+        </div>
+    </section>
+
+    <!--Book Description Modal-->
+    <div class="modal">
+        <h3></h3>
+        <h4 data-trans="modal-price">Price: </h4><span class="price-span-modal"></span>
+        <h5 data-trans="modal-details">Book Details</h5>
+        <p></p>
+        <label data-trans="modal-label" for="rate">Rate this book (0 to 10):</label>
+        <button class="less-rate">-</button>
+        <input type="number" id="rate" min="0" max="10" value="" size="5" onchange="this.title=this.value"
+            class="rate-input">
+        <button class="more-rate">+</button><br />
+        <button data-trans="modal-close" class="close-modal" onclick="onCloseModal()">Close</button>
+    </div>
+
+    <!--Book Update Modal-->
+    <div class="update-modal">
+        <h4 data-trans="modal-update-h4">What is the new book price?</h4>
+        <input required type="number" size="4"><br />
+        <button data-trans="modal-update-btn" onclick="onUpdateBook('${book.id}')" class="update-btn">Update</button>
+    </div>
+
+    <!--New Book Modal-->
+    <div class="new-book-modal">
+        <form onsubmit="onAddBook(event)">
+            <label data-trans="modal-new-book-title" for="title">Book Title</label>
+            <input required type="text" id="title">
+            <label data-trans="modal-new-book-price" for="price">Book Price</label>
+            <input required type="number" id="price">
+            <button data-trans="modal-new-book-btn" class="new-book-btn">Submit</button>
+        </form>
+    </div>
+
+    <!--User Message Modal-->
+    <div data-trans="modal-book-deleted" class="user-msg">
+        Book was deleted
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- <script src="lib/bootstrap/bootstrap.bundel.js"></script> -->
+    <script src="js/services/utils.services.js"></script>
+    <script src="js/services/i18n.services.js"></script>
+    <script src="js/services/storage.service.js"></script>
+    <script src="js/services/book.services.js"></script>
+    <script src="js/book.controller.js"></script>
+</body>
+
+</html>
