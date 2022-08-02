@@ -5,7 +5,7 @@
 body {
     text-align: center;
     overflow-x: hidden;
-    width: 100%;
+    width: 98%;
 }
 
 body.rtl {
@@ -61,8 +61,8 @@ select {
 .table-container {
     overflow-x: auto;
     display: flex;
-    justify-content: center;
     width: 100%;
+    /* min-height: 225px; */
 }
 
 th.th-price,
@@ -82,6 +82,10 @@ button {
     border-radius: 5px;
     cursor: pointer;
     color: white;
+}
+
+.btn-search {
+    background-color: gray;
 }
 
 .read-btn,
@@ -112,6 +116,10 @@ button {
 .pagination {
     align-self: center;
     margin-top: 30px;
+}
+
+.page-nums-link {
+    display: none;
 }
 
 a {
@@ -191,8 +199,14 @@ a:hover {
     margin: 7px 7px;
 }
 
-@media screen and (min-width: 768px) {
-    
+@media screen and (min-width: 675px) {
+    .table-container {
+        justify-content: center;
+    }
+
+    .page-nums-link {
+        display: unset;
+    }
 }
 
 @media screen and (min-width: 1092px) {

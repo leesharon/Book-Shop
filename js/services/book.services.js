@@ -17,13 +17,19 @@ function getBooksForDisplay() {
 }
 
 function nextPage() {
-    if ((gPageIdx + 1) * PAGE_SIZE >= gBooks.length) return true
+    const pageCount = Math.ceil(gBooks.length / PAGE_SIZE)
+    if ((gPageIdx + 1) * PAGE_SIZE >= gBooks.length) return
     gPageIdx++
+    if (pageCount > 1 && gPageIdx === 1) changePageBtnClass('btn-prev')
+    if (gPageIdx + 1 === pageCount) return true
 }
 
 function prevPage() {
+    const pageCount = Math.ceil(gBooks.length / PAGE_SIZE)
     if ((gPageIdx + 1) * PAGE_SIZE <= PAGE_SIZE) return
     gPageIdx--
+    if (gPageIdx + 1 === pageCount - 1) changePageBtnClass('btn-next')
+    if (gPageIdx === 0) changePageBtnClass('btn-prev')
 }
 
 function getPageIdx() {

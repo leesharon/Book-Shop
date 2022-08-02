@@ -5,7 +5,7 @@ var gTrans = {
         en: 'My Book Shop',
         he: 'חנות הספרים שלי'
     },
-    
+
     heading: {
         en: 'Welcome to my Book Shop',
         he: 'ברוכים הבאים לחנות הספרים שלי'
@@ -30,7 +30,7 @@ var gTrans = {
         en: 'Highest Price',
         he: 'מחיר הכי גבוה'
     },
-    
+
     'sort-by-lowest-rate': {
         en: 'Lowest Rate',
         he: 'דירוג הכי נמוך'
@@ -140,7 +140,6 @@ var gTrans = {
         en: 'Next',
         he: 'הבא'
     }
-
 }
 
 var gCurrLang = 'en'
@@ -169,6 +168,29 @@ function doTrans() {
 
         if (el.placeholder !== undefined) el.placeholder = translateVal
     })
+}
 
+function switchCurrency(curr) {
 
+    const shekelOpt = {
+        style: 'currency',
+        currency: 'ils'
+    }
+    
+    const usdOpt = {
+        style: 'currency',
+        currency: 'USD'
+    }
+    
+    const elInputValue = $('.lang-select').val()
+
+    let currOpt = (elInputValue === 'he') ? shekelOpt : usdOpt
+
+    const els = document.querySelectorAll('[data-transcurr]')
+
+    els.forEach(el => {
+        const price = el.dataset.price
+        let newPrice = new Intl.NumberFormat('en', currOpt).format(price)
+        el.innerText = newPrice
+    })
 }

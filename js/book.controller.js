@@ -12,7 +12,7 @@ function renderBooks() {
         <tr>
             <td>#${book.id}</td>
             <td class="td-title">${book.title}</td>
-            <td class="price">${book.price}$</td>
+            <td data-transcurr="td-price" data-price="${book.price}" class="price">$${book.price}</td>
             <td><button data-trans="btn-read" onclick="onReadBook('${book.id}')" class="read-btn">Read</button></td>
             <td><button data-trans="btn-update" onclick="onOpenUpdateModal('${book.id}')" class="update-btn">Update</button></td>
             <td><button data-trans="btn-remove" onclick="onRemoveBook('${book.id}')" class="remove-btn">Delete</button></td>
@@ -28,15 +28,13 @@ function renderPagination() {
     const pagesCount = Math.ceil(getgBooks().length / getPageSize())
     var strHTML = ``
 
-    for (let i = 0; i < pagesCount + 2; i++) {
-        if (i === 0) strHTML += `<a data-trans="prev-btn" onclick="onPrevPage()" class="previous btn-prev">&laquo; Previous</a>`
-        else if (i === pagesCount + 1) strHTML += `<a data-trans="next-btn" onclick="onNextPage()" class="next btn-next">Next &raquo;</a>`
-        else strHTML += `<a class="page-${i}" onclick="onPageSelection(this)">${i}</a>`
+    for (let i = 0; i < pagesCount; i++) {
+        strHTML += `<a class="page-${i}" onclick="onPageSelection(this)">${i + 1}</a>`
     }
-    document.querySelector('.pagination').innerHTML = strHTML
+    document.querySelector('.btn-prev').nextElementSibling.innerHTML = strHTML
 
     const currPageIdx = getPageIdx()
-    document.querySelector(`.page-${currPageIdx + 1}`).classList.add('next')
+    document.querySelector(`.page-${currPageIdx}`).classList.add('next')
 }
 
 function onPageSelection(elBtn) {
@@ -61,9 +59,9 @@ function onOpenNewBookModal() {
 function onAddBook(ev) {
     ev.preventDefault()
 
-    const bookName = document.querySelector('#title')
-    const bookPrice = document.querySelector('#price')
-    addBook(bookName.value, bookPrice.value)
+    const bookName = $('#title')
+    const bookPrice = $('#price')
+    addBook(bookName.val(), bookPrice.val())
 
     document.querySelector('.new-book-modal').classList.remove('open')
     bookName.value = ''
@@ -88,9 +86,8 @@ function onUpdateBook(bookId) {
 
 function onReadBook(bookId) {
     const book = getBookById(bookId)
-    const elModal = document.querySelector('.modal')
-    console.log('onReadBook ~ elModal', elModal)
-    elModal.querySelector('h3').innerText = book.title
+    const elModal = $('.modal')
+    elModal.find('h3').innerText = book.title
     elModal.querySelector('.price-span-modal').innerText = book.price + '$'
     elModal.querySelector('p').innerText = book.details
     elModal.querySelector('.less-rate')
@@ -165,12 +162,7 @@ function renderSortByQueryStringParams() {
 
 function onNextPage() {
     const isLastPage = nextPage()
-    console.log('onNextPage ~ isLastPage', isLastPage)
-    if (isLastPage) {
-        const elBtn = document.querySelector('.btn-next')
-        console.log('onNextPage ~ elBtn', elBtn)
-        elBtn.classList.remove('next')
-    }
+    if (isLastPage) changePageBtnClass('btn-next')
     renderBooks()
 }
 
@@ -182,9 +174,22 @@ function onPrevPage() {
 function onSetLang(lang) {
     setLang(lang)
 
-    if(lang === 'he') document.body.classList.add('rtl')
+    if (lang === 'he') document.body.classList.add('rtl')
     else document.body.classList.remove('rtl')
 
     doTrans()
-    
+    switchCurrency()
+
+}
+
+function changePageBtnClass(btnClass) {
+    const elBtn = document.querySelector(`.${btnClass}`)
+
+    if (elBtn.classList.contains('previous')) {
+        elBtn.classList.remove('previous')
+        elBtn.classList.add('next')
+    } else {
+        elBtn.classList.add('previous')
+        elBtn.classList.remove('next')
+    }
 }

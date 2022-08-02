@@ -21,14 +21,14 @@
             <form onsubmit="onRegexSearch(event)">
                 <input data-trans="search-placeholder" placeholder="Search for a book" type="text" id="" min="3"
                     max="15" value="" size="" class="search-bar">
-                <button data-trans="search">Search</button>
+                <button class="btn-search" data-trans="search">Search</button>
             </form>
             <select class="sort-by" onchange="onSetSortBy()">
                 <option data-trans="sort-by" value="">Sort by</option>
                 <option data-trans="sort-by-highest-price" value="maxPrice">Highest Price</option>
                 <option data-trans="sort-by-lowest-rate" value="minRate">Lowest Rate</option>
             </select>
-            <select class="lang-selecet" onchange="onSetLang(this.value)">
+            <select class="lang-select" onchange="onSetLang(this.value)">
                 <option value="en">English</option>
                 <option value="he">עברית</option>
             </select>
@@ -48,7 +48,12 @@
             </table>
         </div>
         <span data-trans="new-book" onclick="onOpenNewBookModal()" class="new-book">Create new book +</span>
+
+        <!-- pagination -->
         <div class="pagination">
+            <a data-trans="prev-btn" onclick="onPrevPage()" class="previous btn-prev">&laquo; Previous</a>
+            <a class="page-nums-link"></a>
+            <a data-trans="next-btn" onclick="onNextPage()" class="next btn-next">Next &raquo;</a>
         </div>
     </section>
 
@@ -89,7 +94,7 @@
         Book was deleted
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="lib/jquery/jquery.js"></script>
     <!-- <script src="lib/bootstrap/bootstrap.bundel.js"></script> -->
     <script src="js/services/utils.services.js"></script>
     <script src="js/services/i18n.services.js"></script>
